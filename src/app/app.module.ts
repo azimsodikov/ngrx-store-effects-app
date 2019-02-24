@@ -16,6 +16,7 @@ const environment = {
   production: false,
 };
 
+// Each reducer we gonna apply this reducer
 export const metaReducers: MetaReducer<any>[] = !environment.production
   ? [storeFreeze]
   : [];

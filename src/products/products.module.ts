@@ -4,6 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+// NGRX STORE //
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './store';
+
+
 // components
 import * as fromComponents from './components';
 
@@ -35,6 +40,7 @@ export const ROUTES: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forChild(ROUTES),
+    StoreModule.forFeature('products', reducers) // Registering products reducers with the module
   ],
   providers: [...fromServices.services],
   declarations: [...fromContainers.containers, ...fromComponents.components],
