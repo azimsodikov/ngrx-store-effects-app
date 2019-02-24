@@ -38,10 +38,21 @@ export const getPizzaState = createSelector(
 /**
  * Selectors for one level down pizzaState
  */
-export const getAllPizzas = createSelector(
+export const getPizzasEntities = createSelector(
   getPizzaState,
-  fromPizzas.getPizzas
+  fromPizzas.getPizzasEntities
 );
+
+/**
+ * Selector to flatten the object and return array values
+ */
+export const getAllPizzas = createSelector(
+  getPizzasEntities,
+  entities => {
+    return Object.keys(entities).map(id => entities[parseInt(id, 10)]);
+  }
+);
+
 export const getAllPizzasLoaded = createSelector(
   getPizzaState,
   fromPizzas.getPizzasLoaded

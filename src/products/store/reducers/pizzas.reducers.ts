@@ -1,11 +1,12 @@
 // Loading everything from the actions folder
-import * as fromPizzas from '../actions/pizza.action';
-import { Pizza } from 'src/products/models/pizza.model';
+import * as fromPizzas from "../actions/pizza.action";
+import { Pizza } from "src/products/models/pizza.model";
 
 /**
  * This is the piece of state that our reducer is gonna manage
  */
 export interface PizzaState {
+  entities: { [id: number]: Pizza };
   data: Pizza[];
   loaded: boolean;
   loading: boolean;
@@ -15,41 +16,11 @@ export interface PizzaState {
  * Inital state of the application
  */
 export const initialState: PizzaState = {
-  data: [
-    {
-      "name": "Blazin' Inferno",
-      "toppings": [
-        {
-          "id": 10,
-          "name": "pepperoni"
-        },
-        {
-          "id": 9,
-          "name": "pepper"
-        },
-        {
-          "id": 3,
-          "name": "basil"
-        },
-        {
-          "id": 4,
-          "name": "chili"
-        },
-        {
-          "id": 7,
-          "name": "olive"
-        },
-        {
-          "id": 2,
-          "name": "bacon"
-        }
-      ],
-      "id": 1
-    }
-  ],
+  entities: {},
+  data: [],
   loaded: false,
   loading: false
-}
+};
 
 /**
  *
@@ -60,21 +31,41 @@ export function reducer(
   state = initialState,
   action: fromPizzas.PizzasAction
 ): PizzaState {
-
-  switch(action.type) { // Since we are typing this all the actions from the pizza actions, we get all the action options
+  switch (
+    action.type // Since we are typing this all the actions from the pizza actions, we get all the action options
+  ) {
     case fromPizzas.LOAD_PIZZAS: {
       return {
         ...state,
         loading: true
-      }
+      };
     }
 
     case fromPizzas.LOAD_PIZZAS_SUCCESS: {
+      const pizzas = action.payload;
+
+      /**
+       * We are spreading the array to objects to easily look it up instead of looping through the array each time we want piece of it;
+       * By converting them to objects with keys we can easily look up them when needed;
+       */
+      const entities = pizzas.reduce(
+        (entities: { [id: number]: Pizza }, pizza: Pizza) => {
+          return {
+            ...entities,
+            [pizza.id]: pizza
+          };
+        },
+        {
+          ...state.entities
+        }
+      );
+      console.log(entities);
       return {
         ...state,
         loading: false,
-        loaded: true
-      }
+        loaded: true,
+        entities
+      };
     }
 
     case fromPizzas.LOAD_PIZZAS_FAIL: {
@@ -82,7 +73,7 @@ export function reducer(
         ...state,
         loading: false,
         loaded: false
-      }
+      };
     }
   }
 
@@ -93,6 +84,6 @@ export function reducer(
  * It will help us compose things
  * @param state of the pizza
  */
+export const getPizzasEntities = (state: PizzaState) => state.entities;
 export const getPizzasLoading = (state: PizzaState) => state.loading;
 export const getPizzasLoaded = (state: PizzaState) => state.loaded;
-export const getPizzas = (state: PizzaState) => state.data;
