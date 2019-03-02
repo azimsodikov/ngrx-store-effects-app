@@ -1,8 +1,4 @@
-import {
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector
-} from "@ngrx/store";
+import { ActionReducerMap, createFeatureSelector } from "@ngrx/store";
 import * as fromPizzas from "./pizzas.reducers";
 
 /**
@@ -24,40 +20,4 @@ export const reducers: ActionReducerMap<ProductsState> = {
  */
 export const getProductsState = createFeatureSelector<ProductsState>(
   "products"
-);
-
-/**
- * !Selectors are methods used for obtaining slices of store state
- * Selector for the whole pizza state
- */
-export const getPizzaState = createSelector(
-  getProductsState,
-  (state: ProductsState) => state.pizzas
-);
-
-/**
- * Selectors for one level down pizzaState
- */
-export const getPizzasEntities = createSelector(
-  getPizzaState,
-  fromPizzas.getPizzasEntities
-);
-
-/**
- * Selector to flatten the object and return array values
- */
-export const getAllPizzas = createSelector(
-  getPizzasEntities,
-  entities => {
-    return Object.keys(entities).map(id => entities[parseInt(id, 10)]);
-  }
-);
-
-export const getAllPizzasLoaded = createSelector(
-  getPizzaState,
-  fromPizzas.getPizzasLoaded
-);
-export const getAllPizzasLoading = createSelector(
-  getPizzaState,
-  fromPizzas.getPizzasLoading
 );
