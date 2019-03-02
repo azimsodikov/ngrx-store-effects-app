@@ -59,7 +59,6 @@ export function reducer(
           ...state.entities
         }
       );
-      console.log(entities);
       return {
         ...state,
         loading: false,
@@ -73,6 +72,32 @@ export function reducer(
         ...state,
         loading: false,
         loaded: false
+      };
+    }
+    /**
+     * When you leave contents of case empty it is gonna default to the next case and would be
+     * Update or Create run this code
+     */
+    case fromPizzas.UPDATE_PIZZA_SUCCESS:
+    case fromPizzas.CREATE_PIZZA_SUCCESS: {
+      const pizza = action.payload;
+      const entities = {
+        ...state.entities,
+        [pizza.id]: pizza
+      };
+      return {
+        ...state,
+        entities
+      };
+    }
+
+    case fromPizzas.REMOVE_PIZZA_SUCCESS: {
+      const pizza = action.payload;
+      // es6 syntax destructure object and remove an item and assign variable to it also keeping the remaining entities
+      const { [pizza.id]: removed, ...entities } = state.entities;
+      return {
+        ...state,
+        entities
       };
     }
   }
