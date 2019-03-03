@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs/Observable";
@@ -11,6 +11,7 @@ import { Topping } from "../../models/topping.model";
 @Component({
   selector: "product-item",
   styleUrls: ["product-item.component.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="product-item">
       <pizza-form
