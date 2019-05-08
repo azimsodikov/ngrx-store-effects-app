@@ -19,7 +19,7 @@ export const reducers: ActionReducerMap<ProductsState> = {
 };
 
 /**
- * We are creating selector with the help of function which accepts feature name that we passed to the feature module
+ * Creating selector for particular state of the application starting from the root state which is registered in the feature module
  */
 export const getProductsState = createFeatureSelector<ProductsState>(
   "products"

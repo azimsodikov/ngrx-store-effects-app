@@ -15,6 +15,7 @@ export const LOAD_PIZZAS_SUCCESS = "[Products] Load Pizzas Success";
 export class LoadPizzas implements Action {
   readonly type = LOAD_PIZZAS;
 }
+/** Payload fails needed to pass the error messages from the server */
 export class LoadPizzasFail implements Action {
   readonly type = LOAD_PIZZAS_FAIL;
   constructor(public payload: Pizza[]) {}
