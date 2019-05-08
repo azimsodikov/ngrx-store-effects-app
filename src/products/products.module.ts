@@ -5,9 +5,11 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 // NGRX STORE //
-import { StoreModule } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
-import { reducers, effects } from "./store";
+
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
+import { reducers, effects } from './store';
 
 // components
 import * as fromComponents from "./components";
@@ -16,7 +18,7 @@ import * as fromComponents from "./components";
 import * as fromContainers from "./containers";
 
 // guards
-import * as fromGuards from "../products/guards";
+import * as fromGuards from './guards';
 
 // services
 import * as fromServices from "./services";
@@ -46,7 +48,7 @@ export const ROUTES: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forChild(ROUTES),
-    StoreModule.forFeature("products", reducers), // Registering products reducers with the module
+    StoreModule.forFeature("products", reducers), // Registering products StoreModule
     EffectsModule.forFeature(effects) // passing effects to effects module
   ],
   providers: [...fromServices.services, ...fromGuards.guards],
